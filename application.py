@@ -185,7 +185,7 @@ def upload():
     """ Upload essays in database."""
     if request.method == "POST":
 
-        # enters uploaded essay into database table 'essays'
+        # enters uploaded essay into database table 'essays' -- which is student info.
         db.execute("INSERT INTO essays (id, text, feedback) VALUES(:user_id, :essay_text, :feedback)", user_id=session.get("user_id"), essay_text=request.form.get("essay_text"), feedback="Pending")
 
         # redirects user to upload survey form
@@ -204,19 +204,21 @@ def upload_form():
     essay_id = db.execute("SELECT MAX(essay_id) from essays")[0]['MAX(essay_id)']
 
     #updates essay details for that essay
-    db.execute("UPDATE essays SET date=:date, topic=:topic WHERE essay_id=:essay_id",
-    date=request.form.get('date'), topic=request.form.get("user_category"), essay_id=essay_id)
+    db.execute("UPDATE essays SET ability=:ability, meet_time=:meet_time, wechat=:wechat WHERE essay_id=:essay_id", wechat=request.form.get('wechat'),
+    ability=request.form.get('ability'), meet_time=request.form.get("meet_time"), essay_id=essay_id)
 
     # sends confirmation email upon essay submission with information about received essay
     essay_text = db.execute("SELECT text FROM essays WHERE essay_id = :essay_id", essay_id = essay_id)[0]['text']
-    mailer.sendConfirmationEmail(mail, session["user_email"], request.form.get('date'), request.form.get('user_category'), essay_text)
+    mailer.sendConfirmationEmail(mail, session["user_email"], request.form.get('ability'), request.form.get('meet_time'), essay_text)
 
     """ Essay Pairing Algorithm """
     """Attemps to pair submitted essay with current unpaired essay in database -- otherwise, essay is just added as a new unpaired essay
     Paired based on same topic of essay. If paired, then your pair_essay_id is their essay_id, and vice versa. Your pair_id is their user_id, and vice versa."""
-    essay_topic = request.form.get("user_category")
+    """In this case, we're pairing not essays, but rather people, by time they can meet. But the logic is the same, since
+    meet_time took the place of essay topic"""
+    user_meet_time = request.form.get("meet_time")#essay_topic
     # queries the database - finds unpaired essays that have the same category and order by date of requested return (earliest first)
-    unpaired_essays = db.execute("SELECT essay_id FROM essays WHERE topic=:essay_topic AND peer_id IS NULL ORDER BY date ASC", essay_topic = essay_topic)
+    unpaired_essays = db.execute("SELECT essay_id FROM essays WHERE meet_time=:user_meet_time AND peer_id IS NULL ORDER BY date ASC", user_meet_time = user_meet_time)
     #essay that was just submitted will be in unpaired_essays by default. if there is another essay, we can pair with that one.
     #otherwise, if only that essay is in unpaired_essays, then keep that essay unpaired (wait for another essay to come through to pair w/ it)
 
@@ -239,14 +241,14 @@ def upload_form():
         matched_email = db.execute("SELECT username FROM users WHERE id=:user_id", user_id = matched_id)[0]["username"]
         your_deadline = db.execute("SELECT date FROM essays WHERE essay_id = :essay_id", essay_id = matched_essay_id)[0]["date"]
         matched_user_deadline = db.execute("SELECT date FROM essays WHERE essay_id = :essay_id", essay_id =  essay_id)[0]["date"]
-        mailer.sendPairingEmail(mail, session["user_email"], essay_topic, your_deadline)
-        mailer.sendPairingEmail(mail, matched_email, essay_topic, matched_user_deadline)
+        # mailer.sendPairingEmail(mail, session["user_email"], essay_topic, your_deadline)
+        # mailer.sendPairingEmail(mail, matched_email, essay_topic, matched_user_deadline)
 
         # queries for the text of the peer's essay (matched_essay_id) to display
         matched_text = db.execute("SELECT text FROM essays WHERE essay_id=:essay_id", essay_id=matched_essay_id)
         return render_template("paired.html")
     else:
-        return render_template("unpaired.html", essay_topic = essay_topic)
+        return render_template("unpaired.html", user_meet_time = user_meet_time)
 
     return render_template("submitted.html")
 

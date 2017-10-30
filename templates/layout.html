@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Peerify: {% block title %}{% endblock %}</title>
+		<title>Lansi: {% block title %}{% endblock %}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
@@ -18,17 +18,16 @@
 			<!-- Header -->
 				<header id="header">
 					{% if session.user_id %}
-					<h1 id="logo"><a href="{{ url_for('index') }}"><img src="https://s27.postimg.org/y2s2w8ur7/peerify_logo.png" alt="Peerify" style="width:100px; height:42px;" ></a></h1>
+					<h1 id="logo"><a href="{{ url_for('index') }}"><img src="https://s1.postimg.org/13ekmv68ov/Lansi.png" alt="Lansi" style="width:42px; height:42px;" ></a></h1>
 					{% else %}
-					<h1 id="logo"><a href="{{ url_for('main') }}"><img src="https://s27.postimg.org/y2s2w8ur7/peerify_logo.png" alt="Peerify" style="width:100px; height:42px;" ></a></h1>
+					<h1 id="logo"><a href="{{ url_for('main') }}"><img src="https://s1.postimg.org/13ekmv68ov/Lansi.png" alt="Lansi" style="width:42px; height:42px;" ></a></h1>
 					{% endif %}
 					<nav id="nav">
 						{% if session.user_id %}
 						<ul>
 							<li class="current"><a href="{{ url_for('index') }}">Main</a></li>
-							<li class="current"><a href="{{ url_for('upload') }}">Upload</a></li>
-							<li class="current"><a href="{{ url_for('tasks') }}">Tasks</a></li>
-							<li class="current"><a href="{{ url_for('messages') }}">Messages</a></li>
+							<li class="current"><a href="{{ url_for('upload') }}">Lansi Connect</a></li>
+							<li class="current"><a href="{{ url_for('messages') }}">My Lansi Connections</a></li>
 							<li class="current"><a href="{{ url_for('account') }}">Account</a></li>
 							<li class="current"><a href="{{ url_for('logout') }}">Logout</a></li>
 						</ul>
@@ -44,7 +43,7 @@
 			<!-- Main -->
 				<article id="main">
 
-			
+
 
 					<!-- One -->
 						<section class="wrapper style4 container">
@@ -58,7 +57,7 @@
 
 						</section>
 
-					
+
 
 				</article>
 
@@ -81,19 +80,19 @@
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
 			<script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
-			
+
 			<!--Annotation functionality scripts-->
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 			<script src="http://assets.annotateit.org/annotator/v1.2.7/annotator-full.min.js"></script>
-			
-			
+
+
 			<!--Blog-style text box functionality-->
 			<script>
 				tinymce.init({
 		    	selector: '#mytextarea'
 				});
 	  		</script>
-			
+
 			<!-- queries for the essay_id from address link-->
 			<script>
 			function gup( name, url ) {
@@ -105,14 +104,14 @@
 			    return results == null ? null : results[1];
 			}
 			essay_id = gup('number', window.location.href)
-			
+
 			// annotation and storage functionalities - - - annotatiorjs library
-			
+
 			 $(function(){
-			 
+
 			 // initializes a variable to the annotation text box
 			  var annotation = $('#essay_text').annotator();
-			 
+
 			 // stores the text in the annotation box in the "Store"
 			  annotation.annotator('addPlugin', 'Store', {
 			    prefix: '/annotation',

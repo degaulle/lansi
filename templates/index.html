@@ -5,27 +5,25 @@
 {% endblock %}
 
 {% block main %}
-        
-        <h2>My Essays {{essay_id}} </h2>
-        
+
+        <h2>My Upcoming Lansi Connections {{essay_id}} </h2>
+
         {% if essay_number >= 1 %}
-            {% for i in range(0, essay_number) %}
+
             <div>
                 <div style="display: inline-block; margin-right: 100px;">
-                    <a href="{{url_for('essays')}}?number={{essays[i]['essay_id']}}"><img src="http://perso.ens-lyon.fr/paul.brunet/Images/book.png" alt="Paper Icon" height="125" width="125"></a>
+                    <a href="{{url_for('essays')}}?number={{essays[0]['essay_id']}}"><img src="https://s1.postimg.org/8k4mytcslr/highschooler.jpg" alt="name" height="125" width="125"></a>
                 </div>
                 <div style="display:inline">
-                    <p style="display: inline-block;"><b>Essay #{{ i+1 }}</b><br>
-                    Topic: {{ essays[i]['topic'] }} <br>
-                    Submitted On: {{ essays[i]['submitted'] }} <br> 
-                    Requested Feedback By: {{ essays[i]['date'] }} <br>
-                    Feedback: {{ essays[i]['feedback'] }} <br>
-                     </p>
+                    <p style="display: inline-block;"><b>Wenzhe Lai</b><br>
+                    Wechat ID: wenzhe-lai <br>
+                    Time to Meet: {{ essays[0]['meet_time'] }}
+                    </p>
                 </div>
             </div>
-            {% endfor %}
+
         {% else %}
-            <a href="{{url_for('upload')}}">Upload an essay now!</a>
+            <a href="{{url_for('upload')}}">Send a connection request now!</a>
         {% endif %}
-        
+
 {% endblock %}

@@ -1666,7 +1666,7 @@
 			border-top: solid 1.5px;
 			content: '';
 			height: 7px;
-			opacity: 0.1; 
+			opacity: 0.1;
 			position: absolute;
 			top: 1.75em;
 			width: 43%;
@@ -2395,7 +2395,7 @@
 	#banner {
 		background-attachment: scroll, scroll, scroll, fixed;
 		background-color: #645862;
-		background-image: url("../../static/work.jpg");
+		background-image: url("https://farm5.staticflickr.com/4503/37587611000_22f1aa40dc_z.jpg");
 		/*background-position: bottom left, bottom right, top left, top center;*/
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -3190,9 +3190,9 @@
 				width: 50px;
 				height: 34px;
 			}
-	
+
 	}
-	
+
 	tr:nth-child(even) {
 		background-color: #f2f2f2;
 	}

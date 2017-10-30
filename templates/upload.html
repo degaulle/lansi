@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Enter Your Essay:</h1>
+    <h1>Tell us a little about yourself that you would like your tutor to know:</h1>
   <form action="{{ url_for('upload') }}" method="post">
     <textarea name="essay_text" id="mytextarea"></textarea>
     <div class="form-group">
-        <button class="button" type="submit">Upload</button>
+        <button class="button" type="submit">Submit</button>
     </div>
   </form>
- 
+
 {% endblock %}
